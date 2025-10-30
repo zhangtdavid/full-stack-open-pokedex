@@ -77,10 +77,10 @@ jobs:
     if: failure()
     steps:
       - uses: actions/checkout@v4
-      - uses: rjstone/discord-webhook-notify@v2
+      - uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: error
           text: Build failed
           flags: SuppressNotifications
-          details: commit https://github.com/${REPO_OWNER}/${REPO_NAME}/commit/${COMMIT_SHA} by ${{ github.event.commits[0].author.name }} broke the build :(
+          details: commit https://github.com/${{ REPO_OWNER }}/${{ REPO_NAME }}/commit/${{ COMMIT_SHA }} by ${{ github.event.commits[0].author.name }} broke the build :(
