@@ -12,7 +12,6 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "This job is intentionally set to fail." && exit 1
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -33,7 +32,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
 
   deploy-to-fly:
     if: |
