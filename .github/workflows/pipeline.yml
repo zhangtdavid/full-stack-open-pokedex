@@ -47,15 +47,13 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      - name: On success
-        uses: tsickert/discord-webhook@v7.0.0
+      - name: discord webhook_success
         if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.4.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: A new version of Pokedex deployed
-          flags: SuppressNotifications
-          embed-color: 65280
-          embed-description: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.actor }}
+          args: A new version of Pokedex deployed to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.actor }}
 
   tag_release:
     if: |
@@ -77,11 +75,9 @@ jobs:
     if: failure()
     steps:
       - uses: actions/checkout@v4
-      - run: echo "${{ toJson(github.pusher) }} ${{ toJson(github) }}"
-      - uses: tsickert/discord-webhook@v7.0.0
+      - name: discord webhook
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.4.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: Build failed
-          flags: SuppressNotifications
-          embed-color: 16711680
-          embed-description: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build :(
+          args: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build :(
