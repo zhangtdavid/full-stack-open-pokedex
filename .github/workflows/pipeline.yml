@@ -55,7 +55,7 @@ jobs:
           severity: info
           text: A new version of Pokedex deployed
           flags: SuppressNotifications
-          details: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.event.commits[0].author.name }}
+          details: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.actor }}
 
   tag_release:
     if: |
@@ -84,4 +84,4 @@ jobs:
           severity: error
           text: Build failed
           flags: SuppressNotifications
-          details: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.pusher.name }} broke the build :(
+          details: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build :(
