@@ -48,14 +48,14 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: On success
-        uses: rjstone/discord-webhook-notify@v2
+        uses: tsickert/discord-webhook@v7.0.0
         if: success()
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          text: A new version of Pokedex deployed
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: A new version of Pokedex deployed
           flags: SuppressNotifications
-          details: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.actor }}
+          embed-color: 65280
+          embed-description: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.actor }}
 
   tag_release:
     if: |
@@ -78,10 +78,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "${{ toJson(github.pusher) }} ${{ toJson(github) }}"
-      - uses: rjstone/discord-webhook-notify@v2.2.1
+      - uses: tsickert/discord-webhook@v7.0.0
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          text: Build failed
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: Build failed
           flags: SuppressNotifications
-          details: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build :(
+          embed-color: 16711680
+          embed-description: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.actor }} broke the build :(
