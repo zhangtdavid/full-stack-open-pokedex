@@ -77,7 +77,7 @@ jobs:
     if: failure()
     steps:
       - uses: actions/checkout@v4
-      - run: echo "${{ github.pusher }} ${{ github }}"
+      - run: echo "${{ toJson(github.pusher) }} ${{ toJson(github) }}"
       - uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
