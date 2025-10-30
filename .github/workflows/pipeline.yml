@@ -32,6 +32,16 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: On failure
+        uses: rjstone/discord-webhook-notify@v2
+        if: !success()
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          text: Build failed
+          flags: SuppressNotifications
+          details: commit https://github.com/${REPO_OWNER}/${REPO_NAME}/commit/${COMMIT_SHA} by ${{ github.event.commits[0].author.name }} broke the build :(
+
 
   deploy-to-fly:
     if: |
@@ -45,6 +55,15 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: On failure
+        uses: rjstone/discord-webhook-notify@v2
+        if: success()
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          text: A new version of Pokedex deployed
+          flags: SuppressNotifications
+          details: to https://full-stack-open-pokedex-zhangtdavid.fly.dev/ by ${{ github.event.commits[0].author.name }}
 
   tag_release:
     if: |
