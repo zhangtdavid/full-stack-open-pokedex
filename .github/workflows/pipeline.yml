@@ -83,4 +83,4 @@ jobs:
           severity: error
           text: Build failed
           flags: SuppressNotifications
-          details: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.event.commits[0].author.name }} broke the build :(
+          details: commit https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/commit/${{ github.sha }} by ${{ github.pusher.name }} broke the build :(
