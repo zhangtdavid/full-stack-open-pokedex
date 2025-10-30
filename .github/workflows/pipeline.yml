@@ -32,15 +32,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - name: On failure
-        uses: rjstone/discord-webhook-notify@v2
-        if: failure()
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          text: Build failed
-          flags: SuppressNotifications
-          details: commit https://github.com/${REPO_OWNER}/${REPO_NAME}/commit/${COMMIT_SHA} by ${{ github.event.commits[0].author.name }} broke the build :(
+      - run: echo "This job is intentionally set to fail." && exit 1
 
 
   deploy-to-fly:
