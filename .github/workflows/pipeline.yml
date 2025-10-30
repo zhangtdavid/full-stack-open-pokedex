@@ -35,8 +35,8 @@ jobs:
 
   deploy-to-fly:
     if: |
-      ${{ github.event_name == 'push' }} &&
-      ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+      github.event_name == 'push' &&
+      !contains(join(toJson(github.event.commits.*.message)), '#skip')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +47,8 @@ jobs:
 
   tag_release:
     if: |
-      ${{ github.event_name == 'push' }} &&
-      ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+      github.event_name == 'push' &&
+      !contains(join(toJson(github.event.commits.*.message)), '#skip')
     needs: [lint-and-test]
     runs-on: ubuntu-latest
     steps:
