@@ -2,10 +2,10 @@ name: Health check
 
 on:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "* 18 * * *"
 
 jobs:
-  lint-and-test:
+  check-health:
     runs-on: ubuntu-latest
     steps:
       - name: check deployed URL
